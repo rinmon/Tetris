@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>テトリス・アドベンチャー</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="app">
+        <div id="loading-screen">
+            <div class="loading-content">
+                <h1>テトリス・アドベンチャー</h1>
+                <div class="spinner"></div>
+                <p>読み込み中...</p>
+            </div>
+        </div>
+
+        <!-- ログイン・登録画面 -->
+        <div id="auth-screen" class="screen">
+            <div class="auth-container">
+                <h1>テトリス・アドベンチャー</h1>
+                <div class="tabs">
+                    <button class="tab-btn active" data-tab="login">ログイン</button>
+                    <button class="tab-btn" data-tab="register">新規登録</button>
+                </div>
+                
+                <div id="login-form" class="form-container active">
+                    <div class="form-group">
+                        <label for="login-username">ユーザー名</label>
+                        <input type="text" id="login-username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">パスワード</label>
+                        <input type="password" id="login-password" required>
+                    </div>
+                    <button id="login-btn" class="primary-btn">ログイン</button>
+                    <button id="guest-btn" class="secondary-btn">ゲストプレイ</button>
+                </div>
+                
+                <div id="register-form" class="form-container">
+                    <div class="form-group">
+                        <label for="register-username">ユーザー名</label>
+                        <input type="text" id="register-username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-password">パスワード</label>
+                        <input type="password" id="register-password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-confirm">パスワード（確認）</label>
+                        <input type="password" id="register-confirm" required>
+                    </div>
+                    <button id="register-btn" class="primary-btn">登録</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- メインメニュー画面 -->
+        <div id="menu-screen" class="screen">
+            <div class="menu-container">
+                <h1>テトリス・アドベンチャー</h1>
+                <div class="user-info">
+                    <div class="avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="user-details">
+                        <p id="username-display">ゲスト</p>
+                        <div class="level-bar">
+                            <div class="level-info">
+                                <span>Lv.<span id="user-level">1</span></span>
+                                <span id="exp-display">XP: 0/1000</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress" id="exp-bar"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="menu-buttons">
+                    <button id="play-btn" class="menu-btn">
+                        <i class="fas fa-play"></i>
+                        プレイ
+                    </button>
+                    <button id="ranking-btn" class="menu-btn">
+                        <i class="fas fa-trophy"></i>
+                        ランキング
+                    </button>
+                    <button id="profile-btn" class="menu-btn">
+                        <i class="fas fa-user"></i>
+                        プロフィール
+                    </button>
+                    <button id="settings-btn" class="menu-btn">
+                        <i class="fas fa-cog"></i>
+                        設定
+                    </button>
+                    <button id="help-btn" class="menu-btn">
+                        <i class="fas fa-question-circle"></i>
+                        ヘルプ
+                    </button>
+                    <button id="logout-btn" class="menu-btn">
+                        <i class="fas fa-sign-out-alt"></i>
+                        ログアウト
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ゲームモード選択画面 -->
+        <div id="mode-screen" class="screen">
+            <div class="mode-container">
+                <h1>ゲームモード</h1>
+                <div class="mode-list">
+                    <div class="mode-card" data-mode="classic">
+                        <div class="mode-icon"><i class="fas fa-chess-rook"></i></div>
+                        <h3>クラシック</h3>
+                        <p>伝統的なテトリスゲーム。シンプルながらも奥深い！</p>
+                    </div>
+                    <div class="mode-card" data-mode="adventure">
+                        <div class="mode-icon"><i class="fas fa-dragon"></i></div>
+                        <h3>アドベンチャー</h3>
+                        <p>ストーリーベースのRPGモード。ミッションをクリアしてレベルアップ！</p>
+                    </div>
+                    <div class="mode-card" data-mode="battle">
+                        <div class="mode-icon"><i class="fas fa-bolt"></i></div>
+                        <h3>バトル</h3>
+                        <p>AIと対戦！相手にゴミブロックを送って勝利を目指せ！</p>
+                    </div>
+                    <div class="mode-card" data-mode="puzzle">
+                        <div class="mode-icon"><i class="fas fa-puzzle-piece"></i></div>
+                        <h3>パズル</h3>
+                        <p>指定されたブロック配置を作り出すパズルモード。頭脳勝負！</p>
+                    </div>
+                    <div class="mode-card" data-mode="speed">
+                        <div class="mode-icon"><i class="fas fa-tachometer-alt"></i></div>
+                        <h3>スピード</h3>
+                        <p>どんどん加速していく極限のスピードモード。反射神経が試される！</p>
+                    </div>
+                    <div class="mode-card" data-mode="zen">
+                        <div class="mode-icon"><i class="fas fa-om"></i></div>
+                        <h3>禅</h3>
+                        <p>時間制限なし、負けなしのリラックスモード。心を落ち着かせてプレイ。</p>
+                    </div>
+                </div>
+                <button id="back-to-menu" class="secondary-btn">戻る</button>
+            </div>
+        </div>
+
+        <!-- 難易度選択画面 -->
+        <div id="difficulty-screen" class="screen">
+            <div class="difficulty-container">
+                <h1>難易度選択</h1>
+                <div class="difficulty-list">
+                    <div class="difficulty-card" data-difficulty="easy">
+                        <h3>イージー</h3>
+                        <p>落下速度が遅く、初心者向け</p>
+                    </div>
+                    <div class="difficulty-card" data-difficulty="normal">
+                        <h3>ノーマル</h3>
+                        <p>標準的な速度と難易度</p>
+                    </div>
+                    <div class="difficulty-card" data-difficulty="hard">
+                        <h3>ハード</h3>
+                        <p>高速落下で、上級者向け</p>
+                    </div>
+                    <div class="difficulty-card" data-difficulty="expert">
+                        <h3>エキスパート</h3>
+                        <p>最高速度、特殊ルールあり</p>
+                    </div>
+                </div>
+                <button id="back-to-mode" class="secondary-btn">戻る</button>
+            </div>
+        </div>
+
+        <!-- ゲーム画面 -->
+        <div id="game-screen" class="screen">
+            <div class="game-container">
+                <div class="game-header">
+                    <div class="game-info">
+                        <div class="info-item">
+                            <span class="info-label">レベル</span>
+                            <span id="game-level" class="info-value">1</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">スコア</span>
+                            <span id="game-score" class="info-value">0</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">ライン</span>
+                            <span id="game-lines" class="info-value">0</span>
+                        </div>
+                    </div>
+                    <button id="pause-btn"><i class="fas fa-pause"></i></button>
+                </div>
+
+                <div class="game-main">
+                    <div class="side-panel left-panel">
+                        <div class="next-piece-container">
+                            <h3>次のピース</h3>
+                            <div id="next-piece"></div>
+                        </div>
+                        <div class="hold-piece-container">
+                            <h3>ホールド</h3>
+                            <div id="hold-piece"></div>
+                        </div>
+                    </div>
+                    
+                    <div id="tetris-container">
+                        <canvas id="tetris-canvas"></canvas>
+                    </div>
+                    
+                    <div class="side-panel right-panel">
+                        <div class="game-stats">
+                            <h3>統計</h3>
+                            <div id="piece-stats"></div>
+                        </div>
+                        <div class="special-actions" id="special-actions">
+                            <h3>特殊アクション</h3>
+                            <div class="action-buttons">
+                                <!-- 特殊アクションボタンが動的に追加される -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="game-controls">
+                    <div class="control-group">
+                        <button id="move-left-btn" class="control-btn"><i class="fas fa-arrow-left"></i></button>
+                        <button id="rotate-btn" class="control-btn"><i class="fas fa-redo"></i></button>
+                        <button id="move-right-btn" class="control-btn"><i class="fas fa-arrow-right"></i></button>
+                    </div>
+                    <div class="control-group">
+                        <button id="hold-btn" class="control-btn"><i class="fas fa-box"></i></button>
+                        <button id="soft-drop-btn" class="control-btn"><i class="fas fa-arrow-down"></i></button>
+                        <button id="hard-drop-btn" class="control-btn"><i class="fas fa-arrow-down"></i><i class="fas fa-arrow-down"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ポーズ画面 -->
+        <div id="pause-screen" class="overlay-screen">
+            <div class="pause-container">
+                <h2>ポーズ</h2>
+                <div class="pause-buttons">
+                    <button id="resume-btn" class="menu-btn">続ける</button>
+                    <button id="restart-btn" class="menu-btn">リスタート</button>
+                    <button id="quit-btn" class="menu-btn">メニューに戻る</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ゲームオーバー画面 -->
+        <div id="gameover-screen" class="overlay-screen">
+            <div class="gameover-container">
+                <h2>ゲームオーバー</h2>
+                <div class="score-summary">
+                    <p>最終スコア: <span id="final-score">0</span></p>
+                    <p>クリアしたライン: <span id="final-lines">0</span></p>
+                    <p>レベル: <span id="final-level">1</span></p>
+                    <p>獲得経験値: <span id="gained-exp">0</span> XP</p>
+                </div>
+                <div class="gameover-buttons">
+                    <button id="try-again-btn" class="menu-btn">もう一度プレイ</button>
+                    <button id="back-to-menu-btn" class="menu-btn">メニューに戻る</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ランキング画面 -->
+        <div id="ranking-screen" class="screen">
+            <div class="ranking-container">
+                <h1>ランキング</h1>
+                <div class="ranking-tabs">
+                    <button class="ranking-tab active" data-period="daily">日次</button>
+                    <button class="ranking-tab" data-period="weekly">週次</button>
+                    <button class="ranking-tab" data-period="monthly">月次</button>
+                    <button class="ranking-tab" data-period="yearly">年次</button>
+                    <button class="ranking-tab" data-period="all">全期間</button>
+                    <button class="ranking-tab" data-period="special">スペシャル</button>
+                </div>
+                <div class="mode-filters">
+                    <select id="mode-filter">
+                        <option value="all">全モード</option>
+                        <option value="classic">クラシック</option>
+                        <option value="adventure">アドベンチャー</option>
+                        <option value="battle">バトル</option>
+                        <option value="puzzle">パズル</option>
+                        <option value="speed">スピード</option>
+                        <option value="zen">禅</option>
+                    </select>
+                </div>
+                <div class="ranking-table-container">
+                    <table class="ranking-table">
+                        <thead>
+                            <tr>
+                                <th>順位</th>
+                                <th>プレイヤー</th>
+                                <th>スコア</th>
+                                <th>レベル</th>
+                                <th>日付</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ranking-body">
+                            <!-- ランキングデータが動的に追加される -->
+                        </tbody>
+                    </table>
+                </div>
+                <button id="ranking-back-btn" class="secondary-btn">戻る</button>
+            </div>
+        </div>
+
+        <!-- プロフィール画面 -->
+        <div id="profile-screen" class="screen">
+            <div class="profile-container">
+                <h1>プロフィール</h1>
+                <div class="profile-card">
+                    <div class="profile-header">
+                        <div class="avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="profile-info">
+                            <h2 id="profile-username">ユーザー名</h2>
+                            <p>レベル: <span id="profile-level">1</span></p>
+                            <div class="level-bar">
+                                <div class="progress-bar">
+                                    <div class="progress" id="profile-exp-bar"></div>
+                                </div>
+                                <p id="profile-exp">EXP: 0/1000</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="profile-stats">
+                        <h3>統計</h3>
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <span class="stat-label">プレイ回数</span>
+                                <span id="total-games" class="stat-value">0</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">最高スコア</span>
+                                <span id="highest-score" class="stat-value">0</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">合計ライン</span>
+                                <span id="total-lines" class="stat-value">0</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">最終プレイ</span>
+                                <span id="last-played" class="stat-value">-</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="achievements">
+                        <h3>称号と実績</h3>
+                        <div id="achievements-list" class="achievements-grid">
+                            <!-- 実績が動的に追加される -->
+                        </div>
+                    </div>
+                </div>
+                <button id="profile-back-btn" class="secondary-btn">戻る</button>
+            </div>
+        </div>
+
+        <!-- 設定画面 -->
+        <div id="settings-screen" class="screen">
+            <div class="settings-container">
+                <h1>設定</h1>
+                <div class="settings-sections">
+                    <div class="settings-section">
+                        <h3>音声</h3>
+                        <div class="setting-item">
+                            <span>BGM音量</span>
+                            <input type="range" id="bgm-volume" min="0" max="100" value="50">
+                        </div>
+                        <div class="setting-item">
+                            <span>効果音量</span>
+                            <input type="range" id="sfx-volume" min="0" max="100" value="70">
+                        </div>
+                    </div>
+                    
+                    <div class="settings-section">
+                        <h3>表示</h3>
+                        <div class="setting-item">
+                            <span>ダークモード</span>
+                            <label class="switch">
+                                <input type="checkbox" id="dark-mode-toggle">
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                        <div class="setting-item">
+                            <span>ブロックのテーマ</span>
+                            <select id="block-theme">
+                                <option value="classic">クラシック</option>
+                                <option value="neon">ネオン</option>
+                                <option value="pastel">パステル</option>
+                                <option value="monochrome">モノクローム</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="settings-section">
+                        <h3>操作</h3>
+                        <div class="setting-item">
+                            <span>操作感度</span>
+                            <input type="range" id="control-sensitivity" min="1" max="10" value="5">
+                        </div>
+                        <div class="setting-item">
+                            <span>振動フィードバック</span>
+                            <label class="switch">
+                                <input type="checkbox" id="vibration-toggle" checked>
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <button id="settings-back-btn" class="secondary-btn">戻る</button>
+            </div>
+        </div>
+
+        <!-- ヘルプ画面 -->
+        <div id="help-screen" class="screen">
+            <div class="help-container">
+                <h1>ヘルプ</h1>
+                <div class="help-tabs">
+                    <button class="help-tab active" data-tab="how-to-play">遊び方</button>
+                    <button class="help-tab" data-tab="controls">操作方法</button>
+                    <button class="help-tab" data-tab="game-modes">ゲームモード</button>
+                    <button class="help-tab" data-tab="special-features">特殊機能</button>
+                </div>
+                
+                <div id="how-to-play" class="help-content active">
+                    <h2>遊び方</h2>
+                    <p>テトリスは落ちてくるブロック（テトリミノ）を操作して、横一列にそろえてラインを消していくゲームです。</p>
+                    <p>ラインを消すとスコアが加算され、一定数のラインを消すとレベルアップします。</p>
+                    <p>レベルが上がるほど、ブロックの落下速度が速くなります。</p>
+                    <p>ブロックが画面上部に積み上がってしまうとゲームオーバーです。</p>
+                </div>
+                
+                <div id="controls" class="help-content">
+                    <h2>操作方法</h2>
+                    <h3>キーボード</h3>
+                    <ul>
+                        <li>左右矢印: ブロックを左右に移動</li>
+                        <li>上矢印: ブロックを回転</li>
+                        <li>下矢印: ソフトドロップ（少し早く落とす）</li>
+                        <li>スペース: ハードドロップ（一番下まで落とす）</li>
+                        <li>C: ホールド（ブロックを保持する）</li>
+                        <li>ESC: ポーズ</li>
+                    </ul>
+                    <h3>タッチ操作</h3>
+                    <ul>
+                        <li>左右ボタン: ブロックを左右に移動</li>
+                        <li>回転ボタン: ブロックを回転</li>
+                        <li>下矢印ボタン: ソフトドロップ</li>
+                        <li>ダブル下矢印ボタン: ハードドロップ</li>
+                        <li>ホールドボタン: ブロックを保持する</li>
+                    </ul>
+                </div>
+                
+                <div id="game-modes" class="help-content">
+                    <h2>ゲームモード</h2>
+                    <div class="mode-info">
+                        <h3>クラシック</h3>
+                        <p>伝統的なテトリスルールに従ったスタンダードモード。</p>
+                    </div>
+                    <div class="mode-info">
+                        <h3>アドベンチャー</h3>
+                        <p>ストーリーを進めながらミッションをクリアしていく冒険モード。特殊アイテムやスキルが使えます。</p>
+                    </div>
+                    <div class="mode-info">
+                        <h3>バトル</h3>
+                        <p>AIと対戦するモード。ラインを消すと相手のフィールドにゴミブロックが送られます。</p>
+                    </div>
+                    <div class="mode-info">
+                        <h3>パズル</h3>
+                        <p>指定された形になるようにブロックを配置するパズルモード。思考力が試されます。</p>
+                    </div>
+                    <div class="mode-info">
+                        <h3>スピード</h3>
+                        <p>どんどん加速していく高速モード。ハイスコアを目指します。</p>
+                    </div>
+                    <div class="mode-info">
+                        <h3>禅</h3>
+                        <p>時間制限なし、ゲームオーバーなしのリラックスモード。</p>
+                    </div>
+                </div>
+                
+                <div id="special-features" class="help-content">
+                    <h2>特殊機能</h2>
+                    <div class="feature-info">
+                        <h3>レベルと経験値</h3>
+                        <p>ゲームをプレイしてスコアを獲得すると経験値がたまり、レベルが上がります。レベルが上がると新しい特殊能力やアイテムが解放されます。</p>
+                    </div>
+                    <div class="feature-info">
+                        <h3>特殊アクション</h3>
+                        <p>アドベンチャーモードでは、ゲームプレイ中に使用できる特殊アクションがあります。これらはキャラクターのレベルやロールに応じて変化します。</p>
+                    </div>
+                    <div class="feature-info">
+                        <h3>称号と実績</h3>
+                        <p>特定の条件を達成すると称号や実績が解除されます。これにより追加の特典が得られることもあります。</p>
+                    </div>
+                </div>
+                
+                <button id="help-back-btn" class="secondary-btn">戻る</button>
+            </div>
+        </div>
+
+        <!-- 通知 -->
+        <div id="notification" class="notification">
+            <span id="notification-message"></span>
+        </div>
+    </div>
+
+    <!-- メインスクリプト -->
+    <script src="js/auth.js"></script>
+    <script src="js/tetris.js"></script>
+    <script src="js/game-modes.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
