@@ -1,5 +1,6 @@
 /**
  * 認証関連の機能を管理するモジュール
+ * @version 1.0.1 - Updated API paths for https://apl.chotto.news/games/tetris/
  */
 const Auth = (function() {
     // プライベート変数
@@ -78,7 +79,7 @@ const Auth = (function() {
      */
     const register = async function(username, password) {
         try {
-            const response = await fetch('/api/register', {
+            const response = await fetch('/games/tetris/api/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -118,7 +119,7 @@ const Auth = (function() {
      */
     const login = async function(username, password) {
         try {
-            const response = await fetch('/api/login', {
+            const response = await fetch('/games/tetris/api/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -195,7 +196,7 @@ const Auth = (function() {
         }
         
         try {
-            const response = await fetch('/api/users/profile', {
+            const response = await fetch('/games/tetris/api/users/profile', {
                 method: 'GET',
                 headers: getAuthHeaders()
             });
@@ -268,7 +269,7 @@ const Auth = (function() {
         }
         
         try {
-            const response = await fetch('/api/scores', {
+            const response = await fetch('/games/tetris/api/scores', {
                 method: 'POST',
                 headers: getAuthHeaders(),
                 body: JSON.stringify(scoreData)
@@ -305,7 +306,7 @@ const Auth = (function() {
      */
     const getRankings = async function(period = 'all', gameMode = 'all') {
         try {
-            let url = `/api/rankings/${period}`;
+            let url = `/games/tetris/api/rankings/${period}`;
             
             if (gameMode !== 'all') {
                 url += `?gameMode=${gameMode}`;

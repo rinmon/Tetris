@@ -1,11 +1,13 @@
-# テトリス・アドベンチャー v1.0.0
+# テトリス・アドベンチャー v1.0.1
 
-![テトリス・アドベンチャー](https://img.shields.io/badge/テトリス・アドベンチャー-v1.0.0-5e35b1)
+![テトリス・アドベンチャー](https://img.shields.io/badge/テトリス・アドベンチャー-v1.0.1-5e35b1)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 <p align="center">
-  <img src="https://via.placeholder.com/800x400/5e35b1/ffffff?text=テトリス・アドベンチャー" alt="テトリス・アドベンチャーのバナー画像" width="800"/>
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=5e35b1&height=200&section=header&text=テトリス・アドベンチャー&fontSize=40&fontColor=ffffff&animation=fadeIn&fontAlignY=30&desc=v1.0.1&descAlignY=50" alt="テトリス・アドベンチャーのバナー画像" width="800"/>
 </p>
+
+[プレイする](https://apl.chotto.news/games/tetris/)
 
 > **テトリス・アドベンチャー** は、従来のテトリスゲームを超えた全く新しいテトリス体験を提供します。難易度選択、多彩なゲームモード、ロールプレイ要素、そして完全なスマホ対応を実現した次世代テトリスゲームです。
 
@@ -68,6 +70,13 @@ AIと対戦するモード。ラインを消すとゴミブロックが相手の
 - デスクトップPCとノートPC (Windows, macOS, Linux)
 - スマートフォン (iOS, Android)
 - タブレット (iPad, Android Tablet)
+
+## 🌐 プレイ方法
+
+1. [テトリス・アドベンチャー](https://apl.chotto.news/games/tetris/) にアクセスします
+2. ユーザー登録またはゲストモードでプレイを開始します
+3. お好みのゲームモードと難易度を選択します
+4. 楽しいテトリス体験をお楽しみください！
 
 ## 🔮 今後の予定
 

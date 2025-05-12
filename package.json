@@ -1,6 +1,6 @@
 {
   "name": "tetris-adventure",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "スマホ対応の拡張機能を持つテトリスゲーム",
   "main": "server.js",
   "scripts": {

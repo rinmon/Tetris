@@ -11,11 +11,21 @@ const moment = require('moment');
 const app = express();
 const PORT = process.env.PORT || 3000;
 const JWT_SECRET = 'tetris-adventure-secret-key';
+const BASE_PATH = '/games/tetris'; // 新しいベースパス
 
 // ミドルウェア
-app.use(cors());
+app.use(cors({
+  origin: '*', // 本番環境では適切なオリジンに制限することを推奨
+  methods: ['GET', 'POST'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 app.use(bodyParser.json());
 app.use(express.static('public'));
+
+// ベースパスのリダイレクト
+app.get('/', (req, res) => {
+  res.redirect(BASE_PATH);
+});
 
 // データディレクトリの確認と作成
 const dataDir = path.join(__dirname, 'data');
@@ -42,7 +52,7 @@ const initDataFiles = async () => {
 };
 
 // ユーザー登録
-app.post('/api/register', async (req, res) => {
+app.post(BASE_PATH + '/api/register', async (req, res) => {
   try {
     const { username, password } = req.body;
     
@@ -95,7 +105,7 @@ app.post('/api/register', async (req, res) => {
 });
 
 // ログイン
-app.post('/api/login', async (req, res) => {
+app.post(BASE_PATH + '/api/login', async (req, res) => {
   try {
     const { username, password } = req.body;
     
@@ -158,7 +168,7 @@ const authenticateToken = (req, res, next) => {
 };
 
 // スコア登録
-app.post('/api/scores', authenticateToken, async (req, res) => {
+app.post(BASE_PATH + '/api/scores', authenticateToken, async (req, res) => {
   try {
     const { score, level, gameMode } = req.body;
     const userId = req.user.id;
@@ -219,7 +229,7 @@ app.post('/api/scores', authenticateToken, async (req, res) => {
 });
 
 // ランキング取得（日次、週次、月次、年次、全期間）
-app.get('/api/rankings/:period', async (req, res) => {
+app.get(BASE_PATH + '/api/rankings/:period', async (req, res) => {
   try {
     const { period } = req.params;
     const { gameMode } = req.query;
@@ -302,7 +312,7 @@ app.get('/api/rankings/:period', async (req, res) => {
 });
 
 // ユーザープロファイル取得
-app.get('/api/users/profile', authenticateToken, async (req, res) => {
+app.get(BASE_PATH + '/api/users/profile', authenticateToken, async (req, res) => {
   try {
     const userId = req.user.id;
     
@@ -329,5 +339,5 @@ app.get('/api/users/profile', authenticateToken, async (req, res) => {
 // サーバー起動
 app.listen(PORT, async () => {
   await initDataFiles();
-  console.log(`サーバーが起動しました: http://localhost:${PORT}`);
+  console.log(`サーバーが起動しました: http://localhost:${PORT}${BASE_PATH}`);
 });
