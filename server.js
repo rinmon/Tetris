@@ -27,6 +27,11 @@ app.get('/', (req, res) => {
   res.redirect(BASE_PATH);
 });
 
+// テトリスのベースパスへのアクセスを/publicにリダイレクト
+app.get(BASE_PATH, (req, res) => {
+  res.redirect(BASE_PATH + '/public/');
+});
+
 // データディレクトリの確認と作成
 const dataDir = path.join(__dirname, 'data');
 const usersFile = path.join(dataDir, 'users.json');
