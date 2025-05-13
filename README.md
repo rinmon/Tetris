@@ -1,10 +1,10 @@
-# テトリス・アドベンチャー v1.0.1
+# テトリス・アドベンチャー v1.0.2
 
-![テトリス・アドベンチャー](https://img.shields.io/badge/テトリス・アドベンチャー-v1.0.1-5e35b1)
+![テトリス・アドベンチャー](https://img.shields.io/badge/テトリス・アドベンチャー-v1.0.2-5e35b1)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 <p align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&color=5e35b1&height=200&section=header&text=テトリス・アドベンチャー&fontSize=40&fontColor=ffffff&animation=fadeIn&fontAlignY=30&desc=v1.0.1&descAlignY=50" alt="テトリス・アドベンチャーのバナー画像" width="800"/>
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=5e35b1&height=200&section=header&text=テトリス・アドベンチャー&fontSize=40&fontColor=ffffff&animation=fadeIn&fontAlignY=30&desc=v1.0.2&descAlignY=50" alt="テトリス・アドベンチャーのバナー画像" width="800"/>
 </p>
 
 [プレイする](https://apl.chotto.news/games/tetris/)
